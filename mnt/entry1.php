@@ -305,13 +305,41 @@ if ($mnt_flg == 8 AND $ROWID != "") {
             vertical-align: middle;
             width: 110px;
         }
+
+        body {
+            margin: 10px;
+        }
+
+        body #title{
+            width: 80%;
+            text-align: center;
+        }
+
+        #footer {
+            width: 80%;
+            text-align: center;
+        }
+
+        body input[type=button] {
+            margin: 10px 5px 0px 5px;
+        }
+
+        body input[type=text], body textarea{
+            width: 80%;
+        }
     </style>
 </head>
 <body>
-<form method="post" enctype="multipart/form-data" name="form1">
-
+<section id="title">
+    <div style="text-align: left; margin-bottom: 20px">
+        <b>
+            全富士通労働組合連合会結成50周年記念行事
+            <br>
+            富士通労働組合単一組織結成70周年記念事業
+        </b>
+    </div>
     <?php if ($KUBUN == "RA") { ?>
-        <h2>「総合文化展２０２０」申込書</h2>
+        <h2><b>「総合文化展２０２０」申込書</b></h2>
         <div class="btn-group" role="group" aria-label="Basic example">
             <input id="Button3" type="button" value="登録済み一覧→">
             <input id="reg_btn" type="button" value="ユーザーID管理→">
@@ -330,11 +358,14 @@ if ($mnt_flg == 8 AND $ROWID != "") {
             <input id="Button3" type="button" value="登録済み一覧→">
         </div>
     <?php } ?>
+</section>
+
+<form method="post" enctype="multipart/form-data" name="form1">
+
+
     <!-- ============================================================= -->
-    <hr/>
-    <table class="table" border="2" style="
-    margin-left: 5px; width:80%;"
-    >
+    <hr style="width: 80%; float: left"/>
+    <table class="table" border="2" style="width:80%;">
         <!-- ============================================================= -->
         <?php if ($KUBUN == "RA") { ?>
             <tr>
@@ -409,7 +440,7 @@ if ($mnt_flg == 8 AND $ROWID != "") {
             </tr>
 
             <tr>
-                <th>申込者（作者）氏名:</th>
+                <th>(A) 申込者（作者）氏名:</th>
                 <td>
                     <input type="text">
                 </td>
@@ -476,7 +507,7 @@ if ($mnt_flg == 8 AND $ROWID != "") {
 	</tr> -->
 
             <tr>
-                <th>部門：</th>
+                <th>(B) 部門：</th>
                 <td>
                     <select id="bumon" onchange="bumonChange()">
                         <option value="">応募部門を選択ください。</option>
@@ -488,7 +519,7 @@ if ($mnt_flg == 8 AND $ROWID != "") {
             </tr>
 
             <tr>
-                <th>カテゴリー：</th>
+                <th>(C) カテゴリー：</th>
                 <td>
                     <select id="category">
                         <option value="C01">①絵画</option>
@@ -500,7 +531,7 @@ if ($mnt_flg == 8 AND $ROWID != "") {
                         >
                         <option value="C07">⑦音楽</
                         >
-                        <option value="C09">⑧動画</
+                        <option value="C08">⑧動画</
                         >
                         <option value="C09">⑨絵</
                         >
@@ -549,7 +580,9 @@ if ($mnt_flg == 8 AND $ROWID != "") {
             </tr>
 
             <tr>
-                <th colspan="2">額、表装を含めた作品サイズ　※（B)がエキスパート部門、キッズ部門（書道）の場合のみ以下を入力</th>
+                <th colspan="2">額、表装を含めた作品サイズ　
+                   <br> ※（B)がエキスパート部門、キッズ部門（書道）の場合のみ以下を入力
+                </th>
             </tr>
 
             <tr>
@@ -606,8 +639,10 @@ if ($mnt_flg == 8 AND $ROWID != "") {
 
 	-->
 
-            <tr>
-                <th colspan="2">作品の返送先<br>作品は展示期間の終了後に返送します。（B)がエキスパート部門、キッズ部門の場合のみ入力ください。</th>
+            <tr >
+                <th colspan="2" >作品の返送先、作品は展示期間の終了後に返送します。
+                    <br>（B)がエキスパート部門、キッズ部門の場合のみ入力ください。
+                </th>
             </tr>
 
             <tr>
@@ -761,21 +796,24 @@ if ($mnt_flg == 8 AND $ROWID != "") {
         <?php } ?>
         <!-- ============================================================= -->
     </table>
-    <?php if ($mnt_flg == 8 AND $ROWID != "") { ?>
-        <input id="Button11" type="button" value="内容を変更する"/>
-        <input id="Button12" type="button" value="削除する"/>
-        <input id="Button13" type="button" value="キャンセル"/>
-    <?php } elseif ($KUBUN == "REG") { ?>
-        <input id="BTN_REGISTER" type="button" value="登録"/>
-    <?php } else { ?>
-        <input id="Button1" type="button" value="内容を変更する"/>
-    <?php } ?>
-    <input type="hidden" name="kubun" value="<?= $KUBUN ?>"/>
-    <input type="hidden" name="mnt_flg" value="<?= $mnt_flg ?>"/>
-    <input type="hidden" name="rowid" value="<?= $ROWID ?>"/>
-    <input type="hidden" name="svBumon" value="<?= $BUMON ?>"/>
-    <input type="hidden" name="svFile" value="<?= $path ?>"/>
-    <!-- ============================================================= -->
+    <div id="footer">
+        <?php if ($mnt_flg == 8 AND $ROWID != "") { ?>
+            <input id="Button11" type="button" value="内容を変更する"/>
+            <input id="Button12" type="button" value="削除する"/>
+            <input id="Button13" type="button" value="キャンセル"/>
+        <?php } elseif ($KUBUN == "REG") { ?>
+            <input id="BTN_REGISTER" type="button" value="登録"/>
+        <?php } else { ?>
+            <input id="Button1" type="button" value="内容を変更する"/>
+        <?php } ?>
+        <input type="hidden" name="kubun" value="<?= $KUBUN ?>"/>
+        <input type="hidden" name="mnt_flg" value="<?= $mnt_flg ?>"/>
+        <input type="hidden" name="rowid" value="<?= $ROWID ?>"/>
+        <input type="hidden" name="svBumon" value="<?= $BUMON ?>"/>
+        <input type="hidden" name="svFile" value="<?= $path ?>"/>
+        <!-- ============================================================= -->
+    </div>
+
 </form>
 <iframe name="MNTframe" width="0" height="0" frameborder="0" sandbox="allow-forms allow-scripts allow-top-navigation">
     お使いのブラウザはインライン フレームをサポートしていないか、またはインライン フレームを表示しないように設定されています。
@@ -798,23 +836,14 @@ if ($mnt_flg == 8 AND $ROWID != "") {
     function bumonChange() {
         let bumons = ['B01','B02','B03'];
         let bumon = $('#bumon').val();
+        $('#category option').hide();
         if (bumons.indexOf(bumon) != -1) {
             category[bumon].forEach(function (cat) {
                 $("#category option[value='" + cat + "']").show();
             })
-
-            bumons.forEach(function(bum){
-                if (bum != bumon) {
-                    category[bum].forEach(function (cat) {
-                        $("#category option[value='" + cat + "']").hide();
-                    })
-                }
-            })
-
             $('#category').val(category[bumon][0]);
         } else {
             $('#category').val("");
-            $('#category option').hide();
         }
 
     }
