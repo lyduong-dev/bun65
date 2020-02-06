@@ -142,7 +142,7 @@ function Sub_DB_Cnn(&$prm_db_cnn, &$prm_message, &$prm_status) {
 	// MySQL接続
 	if ($prm_db_cnn = mysqli_connect(DF_SQL_ConnHost, DF_SQL_ConnUser, DF_SQL_ConnPass)) {
 		
-		mysqli_set_charset('utf8', $prm_db_cnn);
+		mysqli_set_charset($prm_db_cnn, 'utf8' );
 		
 		if (mysqli_select_db($prm_db_cnn, DF_SQL_ConnDBNm)) {
 			//【接続完了】
