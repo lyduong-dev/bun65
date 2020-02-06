@@ -19,7 +19,7 @@ $err_msg = "";
 */
 session_start();
 
-$timeout = 5; // Number of seconds until it times out.
+$timeout = 600; // Number of seconds until it times out.
 
 // Check if the timeout field exists.
 if (isset($_SESSION['timeout'])) {
@@ -36,12 +36,11 @@ if (isset($_SESSION['timeout'])) {
 // Update the timout field with the current time.
 $_SESSION['timeout'] = time();
 
-if (isset($_SESSION[DF_SSN_ADMIN])) {
-    $str_adm = RTrim($_SESSION[DF_SSN_ADMIN]);
+if (isset($_SESSION['DF_SSN_ADMIN'])) {
+    $str_adm = RTrim($_SESSION['DF_SSN_ADMIN']);
 } else {
     $str_adm = "";
 }
-
 if ($str_adm != "1") {
     header('Location: ' . '/bun65');
 }
@@ -312,57 +311,201 @@ if ($mnt_flg == 8 AND $ROWID != "") {
 <form method="post" enctype="multipart/form-data" name="form1">
 
     <?php if ($KUBUN == "RA") { ?>
-        <h2>作品登録　『 らくらくエントリーの部 』</h2>
+        <h2>「総合文化展２０２０」申込書</h2>
         <div class="btn-group" role="group" aria-label="Basic example">
-            <input id="Button2" type="button" value="力作じまんの部→">
             <input id="Button3" type="button" value="登録済み一覧→">
-
+            <input id="reg_btn" type="button" value="ユーザーID管理→">
         </div>
-    <?php } else { ?>
+    <?php } elseif ($KUBUN == "RI") { ?>
         <h2>作品登録　『力作じまんの部 』</h2>
         <div class="btn-group" role="group" aria-label="Basic example">
             <input id="Button2" type="button" value="らくらくエントリーの部→">
             <input id="Button3" type="button" value="登録済み一覧→">
-
+            <input id="reg_btn" type="button" value="レジスター→">
+        </div>
+    <?php } else { ?>
+        <h2>ユーザーID管理</h2>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <input id="Button2" type="button" value="作品登録→">
+            <input id="Button3" type="button" value="登録済み一覧→">
         </div>
     <?php } ?>
     <!-- ============================================================= -->
     <hr/>
-
-    <table class="table " border="2" style="
-    margin-left: 5px;"
+    <table class="table" border="2" style="
+    margin-left: 5px; width:80%;"
     >
         <!-- ============================================================= -->
         <?php if ($KUBUN == "RA") { ?>
             <tr>
+                <th>申込日:</th>
+                <td>
+                    <select id="year" onchange="dateChange()">
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                    </select>
+                    年
+                    <select id="month" onchange="dateChange()">
+                        <?php for ($month = 1; $month <= 12; $month++) {
+                            echo '<option value="' . $month . '">' . $month . '</option>';
+                        } ?>
+                    </select>
+                    月
+                    <select id="day">
+                        <?php for ($day = 1; $day <= 31; $day++) {
+                            echo '<option value="' . $day . '">' . $day . '</option>';
+                        } ?>
+                    </select>
+                    日
+                </td>
+            </tr>
+
+            <tr>
+                <th>組合：</th>
+                <td>
+                    <select>
+                        <option>組合名を選択ください。</option>
+                        <option>富士通</option>
+                        <option>富士通フロンテック</option>
+                        <option>新光電気</option>
+                        <option>富士通テレコムネットワークス</option>
+                        <option>富士通マーケティング</option>
+                        <option>しなの富士通</option>
+                        <option>ＦＤＫ</option>
+                        <option>富士通アイ・ネット</option>
+                        <option>扶桑電通</option>
+                        <option>ＰＦＵ</option>
+                        <option>富士通ワイエフシー</option>
+                        <option>富士通エレクトロニクス</option>
+                        <option>デンソーテン</option>
+                        <option>富士通ゼネラル</option>
+                        <option>富士通アイソテック</option>
+                        <option>ニフティ</option>
+                        <option>ＪＥＭＳ＆ＦＰＥ</option>
+                        <option>富士通エフサス</option>
+                        <option>富士通インフォテック</option>
+                        <option>富士通エフ・アイ・ピー</option>
+                        <option>富士通コワーコ</option>
+                        <option>富士通ネットワークソリューションズ</option>
+                        <option>富士通北陸システムズ</option>
+                        <option>富士通九州システムズ</option>
+                        <option>富士通ビー・エス・シー</option>
+                        <option>沖縄富士通システムエンジニアリング</option>
+                        <option>富士通ラーニングメディア</option>
+                        <option>富士通ＩＴプロダクツ</option>
+                        <option>富士通アドバンストエンジニアリング</option>
+                        <option>ＦＪＦＳ</option>
+                        <option>富士通パブリックソリューションズ</option>
+                        <option>富士通エフ・アイ・ピー・システムズ</option>
+                        <option>ＦＳＣＳ</option>
+                        <option>サイプレス・イノベイツ</option>
+                        <option>会津富士通セミコンダクター</option>
+                        <option>三重富士通セミコンダクター</option>
+                        <option>ソシオネクスト</option>
+                        <option>富士通クラウドテクノロジーズ</option>
+                        <option>オン・セミコンダクター会津</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>申込者（作者）氏名:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>申込者（作者）氏名（ふりがな）:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>組合員氏名:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>参加区分　※応募時：</th>
+                <td>
+                    <select>
+                        <option value="1">申込者（作者）の参加区分を選択ください。</option>
+                        <option value="2">組合員（定年後再雇用者含む）</option>
+                        <option value="3">家族</option>
+                        <option value="4">組合のOB・OG</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>年齢区分　※応募時：</th>
+                <td>
+                    <select>
+                        <option value="1">申込者（作者）の年齢区分を選択ください。</option>
+                        <option value="2">小学生以下</option>
+                        <option value="3">中学生～18歳以下</option>
+                        <option value="4">19～59歳以下</option>
+                        <option value="5">60歳以上</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!-- <tr>
+		<th>部門：</th>
+		<td>
+			<select name="Select1">
+				<option value="B01" >写真</option>
+				<option value="B02" <?php if ($BUMON == "B02") {
+                echo "selected";
+            } ?>>イラスト</option>
+				<option value="B03" <?php if ($BUMON == "B03") {
+                echo "selected";
+            } ?>>川柳</option>
+				<option value="B04" <?php if ($BUMON == "B04") {
+                echo "selected";
+            } ?>>俳句</option>
+				<option value="B05" <?php if ($BUMON == "B05") {
+                echo "selected";
+            } ?>>短歌</option>
+			</select>
+		</td>
+	</tr> -->
+
+            <tr>
                 <th>部門：</th>
                 <td>
-                    <select id="select1" name="Select1">
-                        <option value="B01">写真</option>
-                        <option value="B02" <?php if ($BUMON == "B02") {
-                            echo "selected";
-                        } ?>>イラスト
-                        </option>
-                        <option value="B03" <?php if ($BUMON == "B03") {
-                            echo "selected";
-                        } ?>>川柳
-                        </option>
-                        <option value="B04" <?php if ($BUMON == "B04") {
-                            echo "selected";
-                        } ?>>俳句
-                        </option>
-                        <option value="B05" <?php if ($BUMON == "B05") {
-                            echo "selected";
-                        } ?>>短歌
-                        </option>
-                        <option value="B06" <?php if ($BUMON == "B06") {
-                            echo "selected";
-                        } ?>>Video
-                        </option>
-                        <option value="B07" <?php if ($BUMON == "B07") {
-                            echo "selected";
-                        } ?>>Audio
-                        </option>
+                    <select id="bumon" onchange="bumonChange()">
+                        <option value="">応募部門を選択ください。</option>
+                        <option value="B01">エキスパート</option>
+                        <option value="B02">エンジョイ</option>
+                        <option value="B03">キッズ</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>カテゴリー：</th>
+                <td>
+                    <select id="category">
+                        <option value="C01">①絵画</option>
+                        <option value="C02">②書道</option>
+                        <option value="C03">③写真</option>
+                        <option value="C04">④手芸・工芸</option>
+                        <option value="C05">⑤写真</option>
+                        <option value="C06">⑥絵画</
+                        >
+                        <option value="C07">⑦音楽</
+                        >
+                        <option value="C09">⑧動画</
+                        >
+                        <option value="C09">⑨絵</
+                        >
+                        <option value="C10">⑩書道</
+                        >
                     </select>
                 </td>
             </tr>
@@ -374,15 +517,15 @@ if ($mnt_flg == 8 AND $ROWID != "") {
                         <a href="<?= $path ?>" rel="lightbox" title="my caption">
                             <img id="imgTEMP" src="<?= $path ?>" width="150" height="112" alt="" border=0></a>
                         <br/>
-                        <div id="file-label">
-                            <legend>画像ファイルを変更(GIF, JPEG, PNGのみ対応)</legend>
-                            <input name="File1" type="file" accept="image/*" onchange="Filevalidation()" size=55/>
-                        </div>
+                        <legend>
+                            画像またはビデオファイルを選択します<br>（GIF、JPG、PNG、MP4、WEBMのみ）
+                        </legend>
+                        <input name="File1" type="file" size=55/>
                     <?php } else { ?>
-                        <div id="file-label">
-                            <legend>画像ファイルを選択(GIF, JPEG, PNGのみ対応)</legend>
-                            <input name="File1" type="file" accept="image/*" onchange="Filevalidation()" size=55/>
-                        </div>
+                        <legend>
+                            画像またはビデオファイルを選択します<br>（GIF、JPG、PNG、MP4、WEBMのみ）
+                        </legend>
+                        <input name="File1" type="file" size=55/>
                     <?php } ?>
                     <br/>
                     <hr/>
@@ -390,34 +533,112 @@ if ($mnt_flg == 8 AND $ROWID != "") {
                     <textarea name="TextArea1" cols="50" rows="5"><?= $sakuhin ?></textarea><br>
                 </td>
             </tr>
+
             <tr>
-                <th>作品コメント：</th>
+                <th>作品タイトル：</th>
                 <td>
-                    <textarea name="TextArea2" cols="50" rows="5"><?= $comment ?></textarea><br>
+                    <input type="text">
                 </td>
             </tr>
+
             <tr>
-                <th>支部名：</th>
-                <td><select name="Text11">
-                        <option value="">
-                            <?php
-                            foreach ($envShibu as $val) {
-                                if ($SIBU == $val) {
-                                    echo "<option value=\"$val\" selected>$val";
-                                } else {
-                                    echo "<option value=\"$val\">$val";
-                                }
-                            }
-                            ?>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>名前：</th>
+                <th>作品コメント(100文字まで)：</th>
                 <td>
-                    <input name="Text12" type="text" value="<?= $SIMEI ?>"/><br/>
+                    <textarea rows="5"></textarea><br>
                 </td>
             </tr>
+
+            <tr>
+                <th colspan="2">額、表装を含めた作品サイズ　※（B)がエキスパート部門、キッズ部門（書道）の場合のみ以下を入力</th>
+            </tr>
+
+            <tr>
+                <th>縦（㎝）:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>横（㎝）:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>高さ（㎝）<br>※（C）が手芸・工芸の場合のみ入力:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>重量（㎏）<br>※（C）が手芸・工芸の場合のみ入力:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <!--
+	<tr>
+		<th>支部名：</th>
+		<td><select name="Text11">
+				<option value="">
+				<?php
+            foreach ($envShibu as $val) {
+                if ($SIBU == $val) {
+                    echo "<option value=\"$val\" selected>$val";
+                } else {
+                    echo "<option value=\"$val\">$val";
+                }
+            }
+            ?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>名前：</th>
+		<td>
+			<input name="Text12" type="text" value="<?= $SIMEI ?>" /><br />
+		</td>
+	</tr>
+
+	-->
+
+            <tr>
+                <th colspan="2">作品の返送先<br>作品は展示期間の終了後に返送します。（B)がエキスパート部門、キッズ部門の場合のみ入力ください。</th>
+            </tr>
+
+            <tr>
+                <th>郵便番号:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>住所:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>氏名:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <th>電話番号:</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+
+
             <input name="Text13" type="hidden" value=""/>
             <input name="Text14" type="hidden" value=""/>
             <input name="Text15" type="hidden" value=""/>
@@ -426,9 +647,8 @@ if ($mnt_flg == 8 AND $ROWID != "") {
             <input name="Text18" type="hidden" value=""/>
             <input name="Text19" type="hidden" value=""/>
             <input name="Text20" type="hidden" value=""/>
-
             <!-- ============================================================= -->
-        <?php } else { ?>
+        <?php } elseif ($KUBUN == "RI") { ?>
             <tr>
                 <th>部門：</th>
                 <td>
@@ -529,15 +749,26 @@ if ($mnt_flg == 8 AND $ROWID != "") {
                 <td> 宛先（お名前）:<input name="Text20" type="text" size="30" value="<?= $R_NAME ?>"/></td>
             </tr>
             <input type="hidden" name="TextArea1" value=""/>
+        <?php } else { ?>
+            <tr>
+                <th>
+                    CSV ファイル
+                </th>
+                <td>
+                    <input type="file" accept=".csv">
+                </td>
+            </tr>
         <?php } ?>
         <!-- ============================================================= -->
     </table>
     <?php if ($mnt_flg == 8 AND $ROWID != "") { ?>
-        <p><input id="Button11" type="button" value="内容を変更する"/></p>
-        <p><input id="Button12" type="button" value="削除する"/></p>
-        <p><input id="Button13" type="button" value="キャンセル"/></p>
+        <input id="Button11" type="button" value="内容を変更する"/>
+        <input id="Button12" type="button" value="削除する"/>
+        <input id="Button13" type="button" value="キャンセル"/>
+    <?php } elseif ($KUBUN == "REG") { ?>
+        <input id="BTN_REGISTER" type="button" value="登録"/>
     <?php } else { ?>
-        <p><input id="Button1" type="button" value="内容を確認する"/></p>
+        <input id="Button1" type="button" value="内容を変更する"/>
     <?php } ?>
     <input type="hidden" name="kubun" value="<?= $KUBUN ?>"/>
     <input type="hidden" name="mnt_flg" value="<?= $mnt_flg ?>"/>
@@ -552,9 +783,70 @@ if ($mnt_flg == 8 AND $ROWID != "") {
 
 <script src="./js/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="./lightbox281/js/lightbox.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
+        bumonChange()
+        dateChange()
+    })
+
+    const category = {
+        'B01': ['C01', 'C02', 'C03', 'C04'],
+        'B02': ['C05', 'C06', 'C07', 'C08'],
+        'B03': ['C09', 'C10'],
+    };
+
+    function bumonChange() {
+        let bumons = ['B01','B02','B03'];
+        let bumon = $('#bumon').val();
+        if (bumons.indexOf(bumon) != -1) {
+            category[bumon].forEach(function (cat) {
+                $("#category option[value='" + cat + "']").show();
+            })
+
+            bumons.forEach(function(bum){
+                if (bum != bumon) {
+                    category[bum].forEach(function (cat) {
+                        $("#category option[value='" + cat + "']").hide();
+                    })
+                }
+            })
+
+            $('#category').val(category[bumon][0]);
+        } else {
+            $('#category').val("");
+            $('#category option').hide();
+        }
+
+    }
+
+    function dateChange() {
+        let year = $('#year').val()
+        let month = $('#month').val()
+
+        let even = ['4', '6', '9', '11']
+
+        if (month == '2') {
+            $('#day option[value=31]').hide()
+            $('#day option[value=30]').hide()
+            if (year == '2019') {
+                $('#day option[value=29]').hide()
+            } else {
+                $('#day option[value=29]').show()
+            }
+        } else if (even.indexOf(month) != -1) {
+            $('#day option[value=29]').show()
+            $('#day option[value=31]').hide()
+            $('#day option[value=30]').show()
+        } else {
+            $('#day option[value=29]').show()
+            $('#day option[value=31]').show()
+            $('#day option[value=30]').show()
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
 
         $("#Button1").bind("click", function () {
             document.form1.action = "./chk1.php";
@@ -582,6 +874,12 @@ if ($mnt_flg == 8 AND $ROWID != "") {
             document.form1.submit();
         });
 
+        $("#Button4").bind("click", function () {
+            document.form1.mnt_flg.value = "0";
+            document.form1.action = "./video.php";
+            document.form1.target = "_self";
+            document.form1.submit();
+        });
 
         $("#Button11").bind("click", function () {
             if (confirm("変更します。\nよろしいですか？")) {
@@ -599,6 +897,14 @@ if ($mnt_flg == 8 AND $ROWID != "") {
 //document.form1.target = "_self";
                 document.form1.submit();
             }
+        });
+
+        $("#reg_btn").bind("click", function () {
+            document.form1.mnt_flg.value = "0";
+            document.form1.kubun.value = "REG";
+            document.form1.action = "./entry1.php";
+            document.form1.target = "_self";
+            document.form1.submit();
         });
 
         $("#Button13").bind("click", function () {
@@ -620,26 +926,8 @@ if ($mnt_flg == 8 AND $ROWID != "") {
             document.form1.target = "_self";
             document.form1.submit();
         });
-        $("#select1").change(function () {
-            var str = "";
-            $("#select1 option:selected").each(function () {
-                str += $(this).val() + " ";
-                console.log(str);
-            });
-
-            if (str.includes("B06")) {
-                $("#file-label").empty();
-                $("#file-label").append("<legend>Change Video File(MP4, WEBM)</legend> <input name=\"File1\" accept=\"video/*\" onchange=\"Filevalidation()\" id=\"video-file\" type=\"file\" size=55 />");
-            } else if (str.includes("B07")) {
-                $("#file-label").empty();
-                $("#file-label").append("<legend>Choose Audio File(MP3, OGG, FLAC)</legend> <input name=\"File1\" accept=\"audio/*\" onchange=\"Filevalidation()\" id=\"audio-file\" type=\"file\" size=55 />");
-            }
-
-
-        });
     });
 </script>
-
 <!--Lightbox2オプションのカスタマイズ（必要時） -->
 <script>
     lightbox.option({
@@ -647,32 +935,7 @@ if ($mnt_flg == 8 AND $ROWID != "") {
         'wrapAround': true
     })
 </script>
-<script>
-    //[Validate]
-    //Validate size of file if file EMPTY or >100MB
-    Filevalidation = () => {
-        var fi = document.getElementById('video-file');
-        var i;
-        // Check if any file is selected. 
-        if (fi.files.length > 0) {
-            for (i = 0; i <= fi.files.length - 1; i++) {
 
-                const fsize = fi.files.item(i).size;
-                const file = Math.round((fsize / 1024));
-                // The size of the file. 
-                if (file >= 102400) {
-                    alert(
-                        "File too Big, please select a file less than 100mb");
-                    fi.value = '';
-                } else if (file < 1) {
-                    alert(
-                        "File too small, please select a file greater than 1kb");
-                    fi.value = '';
-                }
-            }
-        }
-    }
-</script>
 </body>
 </html>
 
