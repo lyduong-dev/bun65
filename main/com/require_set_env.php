@@ -81,9 +81,9 @@ define("DF_SQL_ConnDBNm",	$C1_SQL_ConnDBNm);
 //+------------------------------
 //+ システム情報	DF_STR_×××
 //+------------------------------
-define("DF_STR_SYS_NAME",	"総合文化展-2016-" . $C1_SYS_NameHead);
-define("DF_STR_SYS_TITL",	"富士通労組単一組織結成65周年事業～総合文化展2016～");
-define("DF_EN_COPYRIGHT",	"Copyright (C) 2016 FUJITSU");
+define("DF_STR_SYS_NAME",	"総合文化展-2020-" . $C1_SYS_NameHead);
+define("DF_STR_SYS_TITL",	"総合文化展2020");
+define("DF_EN_COPYRIGHT",	"Copyright (C) 2020 FUJITSU");
 define("DF_EN_RECOMMEND",	"確認済み環境：(OS)Windows 7 (Browser)Internet Explorer 11, Mozilla Firefox");
 
 //+------------------------------

@@ -74,11 +74,6 @@ header("Pragma: no-cache");
 					<div id="LOG_GRP_OUT" class="">
 						<input type="button" id="LOG_BTN_OUT" class="w80 h26" value="ログアウト" onClick="Click_LOGOUT();">
 					</div>
-					<?php if ($str_adm == 1) {
-					echo '<div id="REG_GRP" class="">
-						<input type="button" id="REG_BTN" class="w80 h26" value="REGISTER" onClick="Redirect_REG();">
-					</div>';
-					};?>
 		
 			</div>
 		</form>

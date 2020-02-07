@@ -1,4 +1,4 @@
-
+<!--
 /***********************************************************************
 /*	＜総合文化展＞	mn_set_menu.js
 /*	
@@ -20,7 +20,6 @@ function SET_MENU() {
 	var str_uid = "";
 	var str_unm = "";
 	var str_mod = "";
-	var str_adm = "";
 	//---------------------//
 	// セッション有無判定
 	//---------------------//
@@ -29,30 +28,14 @@ function SET_MENU() {
 	str_msg = rc_resu["msg"];
 	str_uid = rc_resu["uid"];
 	str_unm = rc_resu["unm"];
-	str_mod = rc_resu["mod"];													//** エラー処理
-	str_adm = rc_resu["adm"];
-	
-	
+	str_mod = rc_resu["mod"];
+															//** エラー処理
 	if (str_stt != "Err") {
-		
-		// if (str_adm == "1"){
-		// 	window.location.href = '../bun65/mnt/entry1.php';
-		// }
-
 		//---------------------//
 		// 設置：
 		//---------------------//
-		if (str_stt == "REGISTER") {
-			$(".headstat p").html("");
-															//** Nav-Form
-			$(".headnavi p").html("");
-															//** Pan-Form
-			$(".headmenu p").html("<span>■</span>REGISTER画面");
-
-			Sub_SetRegForm();
-
-		} else if (str_stt == "OK") {
-										//** Stt-Form
+		if (str_stt == "OK") {
+															//** Stt-Form
 			Sub_SetSttForm();
 															//** Nav-Form
 			Sub_SetNavForm();
@@ -63,12 +46,12 @@ function SET_MENU() {
 				SET_PAGE("SET_RI", "LS_P01");
 			}
 		} else {
-														//** Stt-Form
+															//** Stt-Form
 			$(".headstat p").html("");
 															//** Nav-Form
 			$(".headnavi p").html("");
 															//** Pan-Form
-			$(".headmenu p").html("<span>■</span>ログイン画面");
+			$(".headmenu p").html("");
 															//** Log-Form
 			Sub_SetLogForm();
 															//** Log-Focus
@@ -92,6 +75,7 @@ function Func_UserSsnJudge() {
 	//---------------------//
 	// 読込：セッション判定ページ
 	//---------------------//
+/*
 	$.ajax({
 		type   : "POST",
 		url    : "./main/menu/xml_Chk_UserSsn.php",
@@ -108,7 +92,6 @@ function Func_UserSsnJudge() {
 			str_uid = $(this).find("uid").text();
 			str_unm = $(this).find("unm").text();
 			str_mod = $(this).find("mod").text();
-			str_adm = $(this).find("adm").text();
 		});
 		$(data).find("reHtml").each(function() {
 			str_htm = $(this).html();
@@ -119,7 +102,8 @@ function Func_UserSsnJudge() {
 		//---------------------//
 		alert("Error : " + errorThrown);
 	});
-	return { stt : str_stt, msg : str_msg, uid : str_uid, unm : str_unm, mod : str_mod, htm : str_htm, adm : str_adm};
+*/
+	return { stt : str_stt, msg : str_msg, uid : str_uid, unm : str_unm, mod : str_mod, htm : str_htm };
 }
 /*******************************************************
 * Sub_SetSttForm：設置：Stt-Form
@@ -129,6 +113,7 @@ function Sub_SetSttForm() {
 	//---------------------//
 	// 読込：Stt-Form領域
 	//---------------------//
+/*
 	$.ajax({
 		type   : "POST",
 		url    : "./main/menu/htm_Set_SttForm.php",
@@ -149,6 +134,7 @@ function Sub_SetSttForm() {
 		//---------------------//
 		alert("Error : " + errorThrown);
 	});
+*/
 	return;
 }
 /*******************************************************
@@ -159,6 +145,7 @@ function Sub_SetNavForm() {
 	//---------------------//
 	// 読込：Nav-Form領域
 	//---------------------//
+/*
 	$.ajax({
 		type   : "POST",
 		url    : "./main/menu/htm_Set_NavForm.php",
@@ -183,6 +170,7 @@ function Sub_SetNavForm() {
 		//---------------------//
 		alert("Error : " + errorThrown);
 	});
+*/
 	return;
 }
 /*******************************************************
@@ -194,6 +182,7 @@ function Sub_SetLogForm() {
 	//---------------------//
 	// 読込：Log-Form領域
 	//---------------------//
+/*
 	$.ajax({
 		type   : "POST",
 		url    : "./main/menu/htm_Set_LogForm.php",
@@ -214,42 +203,9 @@ function Sub_SetLogForm() {
 		//---------------------//
 		alert("Error : " + errorThrown);
 	});
+*/
 	return;
 }
-
-/*******************************************************
-* Sub_SetRegForm：設置：Reg-Form
-*******************************************************/
-function Sub_SetRegForm() {
-	var str_htm = "";
-	var str_prm = $("form[name='F1']").serialize();
-	//---------------------//
-	// 読込：Log-Form領域
-	//---------------------//
-	$.ajax({
-		type   : "POST",
-		url    : "./main/menu/htm_Set_RegForm.php",
-		async  : false,
-		cache  : false,
-		data   : str_prm,
-	}).done(function( data, textStatus, jqXHR ) {
-		//---------------------//
-		// 正常処理
-		//---------------------//
-		$(data).find("reHtml").each(function() {
-			str_htm = $(this).html();
-		});
-		$("#contpostDrawing").html(str_htm);
-	}).fail(function( jqXHR, textStatus, errorThrown ) {
-		//---------------------//
-		// 失敗処理
-		//---------------------//
-		alert("Error : " + errorThrown);
-	});
-	return;
-}
-
-
 /*******************************************************
 * Sub_SetNaviCtrl：挙動指定（ナビ）
 *******************************************************/
@@ -309,33 +265,29 @@ function Sub_SetNaviCtrl() {
 * Click_LOGIN：操作：ログイン
 *******************************************************/
 function Click_LOGIN() {
+	location.href = "./2_トップ.html";
+	return;
+
+	
 	var str_stt = "";
 	var str_msg = "";
+	var str_uid = "";
 	var str_unm = "";
 	var str_mod = "";
-	var str_upw = "";
 	var inp_uid = $("form[name='F_LOG'] input[name='INP_UID']").val();
-	var inp_upw = $("form[name='F_LOG'] input[name='INP_UPW']").val();
+	var inp_unm = $("form[name='F_LOG'] input[name='INP_UNM']").val();
 	var inp_mod = $("form[name='F_LOG'] input[name='INP_MOD']:checked").val();
 	if (TRM_R(inp_uid) == "") {
-		alert("Username cannot be null");
+		alert("従業員番号を入力してください。");
 		$("#LOG_INP_UID").focus();
 		$("#LOG_INP_UID").select();
 		return;
 	}
-
-	if (TRM_R(inp_upw) == "") {
-		alert("Password cannot be null");
-		$("#LOG_INP_UPW").focus();
-		$("#LOG_INP_UPW").select();
-		return;
-	}
-	var rc_resu = Func_UserInpJudge(inp_uid, inp_mod, inp_upw, "login");
-	
+	var rc_resu = Func_UserInpJudge(inp_uid, inp_unm, inp_mod, "login");
 	str_stt = rc_resu["stt"];
 	str_msg = rc_resu["msg"];
+	str_uid = rc_resu["uid"];
 	str_unm = rc_resu["unm"];
-	str_upw = rc_resu["upw"];
 	str_mod = rc_resu["mod"];
 	//---------------------//
 	// ページ再描画
@@ -347,73 +299,15 @@ function Click_LOGIN() {
 	}
 	return;
 }
-
-/*******************************************************
-* Click_REG：操作：ログイン
-*******************************************************/
-function Click_REG() {
-	var inp_csv = $("form[name='F_REG'] input[name='INP_CSV']").val();
-
-	if (inp_csv == "") {
-		alert("Please choose a csv file! ");
-		return;
-	}
-	csv = $("form[name='F_REG'] input[name='INP_CSV']").prop('files')[0];
-	var rc_resu = Func_UserImport(csv);
-
-	str_msg = rc_resu["msg"];
-	
-	//---------------------//
-	// ページ再描画
-	//---------------------//
-	if (str_msg == "") {
-		SET_MENU();
-	} else {
-		alert(str_msg);
-	}
-	return;
-}
-
-function Redirect_REG() {
-	var rc_resu = Func_UserInpJudge("", "", "", "register");
-
-	str_msg = rc_resu["msg"];
-	//---------------------//
-	// ページ再描画
-	//---------------------//
-	if (str_msg == "") {
-		SET_MENU();
-	} else {
-		alert(str_msg);
-	}
-	return;
-}
-
-function Redirect_MAIN() {
-	var rc_resu = Func_UserInpJudge("", "", "", "main");
-
-	str_msg = rc_resu["msg"];
-	//---------------------//
-	// ページ再描画
-	//---------------------//
-	if (str_msg == "") {
-		SET_MENU();
-	} else {
-		alert(str_msg);
-	}
-	return;
-}
-
 /*******************************************************
 * Click_LOG_BTN：操作：ログアウト
 *******************************************************/
 function Click_LOGOUT() {
 	var str_stt = "";
 	var str_msg = "";
+	var str_uid = "";
 	var str_unm = "";
 	var str_mod = "";
-	var str_upw = "";
-
 	
 	if (!confirm("ログアウトしますか？")) {
 		return;
@@ -421,13 +315,13 @@ function Click_LOGOUT() {
 	var rc_resu = Func_UserInpJudge("", "", "", "logout");
 	str_stt = rc_resu["stt"];
 	str_msg = rc_resu["msg"];
+	str_uid = rc_resu["uid"];
 	str_unm = rc_resu["unm"];
 	str_mod = rc_resu["mod"];
-	str_upw = rc_resu["upw"];
 	//---------------------//
 	// ページ再描画
 	//---------------------//
-;	if (str_msg == "") {
+	if (str_msg == "") {
 		SET_MENU();
 	} else {
 		alert(str_msg);
@@ -437,22 +331,23 @@ function Click_LOGOUT() {
 /*******************************************************
 * Func_UserInpJudge：フォーム判定
 *******************************************************/
-function Func_UserInpJudge(prm_uid, prm_mod, prm_upw, prm_flg) {
+function Func_UserInpJudge(prm_uid, prm_unm, prm_mod, prm_flg) {
 	var str_stt = "";
 	var str_msg = "";
 	var str_uid = "";
+	var str_unm = "";
 	var str_mod = "";
 	var str_htm = "";
-	var str_upw = "";
 	//---------------------//
 	// 読込：フォーム判定ページ
 	//---------------------//
+/*
 	$.ajax({
 		type   : "POST",
 		url    : "./main/menu/xml_Chk_UserInp.php",
 		async  : false,
 		cache  : false,
-		data   : { PRM_UID : prm_uid, PRM_MOD : prm_mod, PRM_UPW : prm_upw, PRM_FLG : prm_flg },
+		data   : { PRM_UID : prm_uid, PRM_UNM : prm_unm, PRM_MOD : prm_mod, PRM_FLG : prm_flg },
 	}).done(function( data, textStatus, jqXHR ) {
 		//---------------------//
 		// 正常処理
@@ -463,7 +358,6 @@ function Func_UserInpJudge(prm_uid, prm_mod, prm_upw, prm_flg) {
 			str_uid = $(this).find("uid").text();
 			str_unm = $(this).find("unm").text();
 			str_mod = $(this).find("mod").text();
-			str_upw = $(this).find("upw").text();
 		});
 		$(data).find("reHtml").each(function() {
 			str_htm = $(this).html();
@@ -474,95 +368,7 @@ function Func_UserInpJudge(prm_uid, prm_mod, prm_upw, prm_flg) {
 		//---------------------//
 		alert("Error : " + errorThrown);
 	});
-	return { stt : str_stt, msg: str_msg, uid : str_uid, upw : str_upw, mod : str_mod, htm : str_htm, unm : str_unm };
+*/
+	return { stt : str_stt, msg: str_msg, uid : str_uid, unm : str_unm, mod : str_mod, htm : str_htm };
 }
-
-/*******************************************************
-* Func_UserInpJudge：フォーム判定
-*******************************************************/
-function Func_UserImport(prm_csv) {
-	var str_msg = "";
-	csv = $("form[name='F_REG'] input[name='INP_CSV']").prop('files')[0];
-	
-	if (!(csv && csv.size < 104857600)) {
-		str_msg = "File size exceeds 100MB!";
-		return { msg: str_msg };
-	}
-	
-	var fd = new FormData();
-	fd.append('file', csv);
-	
-	//---------------------//
-	// 読込：フォーム判定ページ
-	//---------------------//
-	$.ajax({
-		type   : "POST",
-		url    : "./main/menu/xml_Chk_UserReg.php",
-		async  : false,
-		cache  : false,
-		processData: false, 
-		contentType: false,
-		data   : fd,
-	}).done(function( data, textStatus, jqXHR ) {
-		//---------------------//
-		// 正常処理
-		//---------------------//
-		$(data).find("reData").each(function() {
-			str_msg = $(this).attr("message");
-		});
-		$(data).find("reHtml").each(function() {
-			str_htm = $(this).html();
-		});
-		
-	}).fail(function( jqXHR, textStatus, errorThrown ) {
-		//---------------------//
-		// 失敗処理
-		//---------------------//
-		switch (jqXHR.status) {
-			case 404:
-					alert("Error : " + errorThrown);
-					break;
-			case 500:
-					alert("Error : " + errorThrown);
-					break;
-	      default:
-	        	alert("Error : File not found");
-	    }
-		
-	});
-	return { msg: str_msg };
-}
-
-
-/**********************************************************
-Load navbar
-*********************************************************/
-function loadNavbar(){
-  $('.dropdown a.test').on("click", function(e){
-    $(this).next('ul').toggle();
-    e.stopPropagation();
-	console.log("Click");
-    e.preventDefault();
-  });
-}
-
-function showNav(prm_Btn){
-	var nav = document.getElementById("topNavBar");
-
-  // If the checkbox is checked, display the output text
-  if (prm_Btn.checked == true){
-    nav.style.display = "block";
-  } else {
-    nav.style.display = "none";
-  }
-}
-  window.onload = function(){
-	  var btn = document.getElementById("show-menu");
-	  btn.checked=false;
-  };
-
-
-	
-
-
 //-->

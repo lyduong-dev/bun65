@@ -113,7 +113,7 @@ header("Pragma: no-cache");
 					<h2>応募作品に投票する</h3>
 				</dt>
 				<dd class=" ">
-					<ul class="  helpInfo">
+					<ul class="helpInfo">
 						<li>
 							投票は、「力作じまんの部《大人の部》」と「らくらくエントリーの部」の各カテゴリーごとに一作品ずつ選択してください。<br>
 							合計６作品を選んでください。<br>
