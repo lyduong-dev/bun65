@@ -312,12 +312,12 @@ if ($mnt_flg == 8 AND $ROWID != "") {
 
         body #title{
             width: 80%;
-            text-align: center;
+            /*text-align: center;*/
         }
 
         #footer {
             width: 80%;
-            text-align: center;
+            /*text-align: center;*/
         }
 
         body input[type=button] {
@@ -522,21 +522,16 @@ if ($mnt_flg == 8 AND $ROWID != "") {
                 <th>(C) カテゴリー：</th>
                 <td>
                     <select id="category">
-                        <option value="C01">①絵画</option>
-                        <option value="C02">②書道</option>
-                        <option value="C03">③写真</option>
-                        <option value="C04">④手芸・工芸</option>
-                        <option value="C05">⑤写真</option>
-                        <option value="C06">⑥絵画</
-                        >
-                        <option value="C07">⑦音楽</
-                        >
-                        <option value="C08">⑧動画</
-                        >
-                        <option value="C09">⑨絵</
-                        >
-                        <option value="C10">⑩書道</
-                        >
+                        <option value="C01">絵画</option>
+                        <option value="C02">書道</option>
+                        <option value="C03">写真</option>
+                        <option value="C04">手芸・工芸</option>
+                        <option value="C05">写真</option>
+                        <option value="C06">絵画</option>
+                        <option value="C07">音楽</option>
+                        <option value="C08">動画</option>
+                        <option value="C09">絵</option>
+                        <option value="C10">書道</option>
                     </select>
                 </td>
             </tr>
@@ -798,9 +793,9 @@ if ($mnt_flg == 8 AND $ROWID != "") {
     </table>
     <div id="footer">
         <?php if ($mnt_flg == 8 AND $ROWID != "") { ?>
-            <input id="Button11" type="button" value="内容を変更する"/>
-            <input id="Button12" type="button" value="削除する"/>
-            <input id="Button13" type="button" value="キャンセル"/>
+            <input id="Button11" type="button" value="内容を変更する"/><br>
+            <input id="Button12" type="button" value="削除する"/><br>
+            <input id="Button13" type="button" value="キャンセル"/><br>
         <?php } elseif ($KUBUN == "REG") { ?>
             <input id="BTN_REGISTER" type="button" value="登録"/>
         <?php } else { ?>
