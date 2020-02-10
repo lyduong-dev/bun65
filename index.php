@@ -155,19 +155,6 @@ header("Pragma: no-cache");
             <input type="button" id="LOG_BTN_OUT" class="w80 h26" value="ログアウト" onClick="Click_LOGOUT();">
         </div>';
         };?>
-        <style>
-            <?php if ($str_uid == "") {
-            echo '
-                div.event{
-                    position: absolute;
-                }';
-            } else {
-                echo '
-                    div.event{
-                        position: relative;
-                    }';
-            }?>
-        </style>
 	</div>
 	<div id="headnaviBground" >
 		<div class="headnavi pl20 pr20 " >
