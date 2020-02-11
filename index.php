@@ -22,6 +22,7 @@ header("Pragma: no-cache");
 /*					$NowTime		：時刻
 /**********************************************************************/
 	//セッション開始・再開
+    ini_set("session.cookie_httponly", 1);
 	session_start();
 	//外部スクリプト読み込み
 	require_once "./main/com/require_set_env.php";
@@ -135,11 +136,11 @@ header("Pragma: no-cache");
 <!-- Head_Area：Header											-->
 <!-- ========================================================== -->
 <div id="Head_Area" class="Fixed_Head">
-<!--	<div id="headstatBground">-->
-<!--		<div class="headstat pl20 pr20">-->
-<!--			<p></p>-->
-<!--		</div>-->
-<!--	</div>-->
+	<div id="headstatBground">
+		<div class="headstat pl20 pr20">
+			<p></p>
+		</div>
+	</div>
 	<div id="headmainBground">
 		<div class="headmain pl20 pr20" >
 			<h1>
@@ -150,11 +151,11 @@ header("Pragma: no-cache");
 <!--            全富士通労働組合連合会結成 50周年記念行事<br>-->
 <!--            富士通労働組合単一組織結成 70周年記念事業-->
 <!--        </div>-->
-        <?php if ($str_uid != "") {
-            echo '<div id="LOG_GRP_OUT" class="floatRight">
-            <input type="button" id="LOG_BTN_OUT" class="w80 h26" value="ログアウト" onClick="Click_LOGOUT();">
-        </div>';
-        };?>
+<!--        --><?php //if ($str_uid != "") {
+//            echo '<div id="LOG_GRP_OUT" class="floatRight">
+//            <input type="button" id="LOG_BTN_OUT" class="w80 h26" value="ログアウト" onClick="Click_LOGOUT();">
+//        </div>';
+//        };?>
 	</div>
 	<div id="headnaviBground" >
 		<div class="headnavi pl20 pr20 " >

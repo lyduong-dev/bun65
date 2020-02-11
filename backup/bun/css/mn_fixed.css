@@ -1,0 +1,241 @@
+/***********************************************************************
+/*	＜総合文化展＞	mn_fixed.css
+/*	
+/*		概  要：外部ファイル
+/*
+/*		備  考：なし
+/*
+/*		Code By		2016/02/01	System Nicol Co.,Ltd	新規
+/*
+/*		Copyright (c) 2016 System Nicol Co.,Ltd All rights reserved.
+/**********************************************************************/
+@charset "utf-8";
+/*----------------------------------------------------*-
+-*==> [public]: Fixed-Style
+-*----------------------------------------------------*/
+body.Fixed_body {
+	margin: 0px;
+	padding: 0px 0px 26px 0px;
+	width: 100%; height:100%;
+	overflow: auto;
+}
+div.Fixed_Head {
+	width: 100%; height: 126px;
+	position: fixed !important;
+	position: absolute; top: 0px; left: 0px;
+	overflow: auto;
+}
+div.Fixed_Foot {
+	width: 100%; height: 26px;
+	position: fixed !important;
+	position: absolute; bottom: 0px; left: 0px;
+	overflow: hidden;
+}
+div.Fixed_Cont {
+	width: 100%; height: auto;
+	position: fixed !important;
+	position: absolute; top: 126px; left: 0px; bottom: 26px;
+	overflow: auto;
+}
+* html div.Fixed_Cont {
+	width: 100%; height: 100%;
+}
+
+/*----------------------------------------------------*-
+-*==> [public]: Fixed_Head … height: 126px = 26px + 40px + (25px + 35px)
+-*----------------------------------------------------*/
+
+/*> header-state
+-*------------------------------*/
+#headstatBground {
+	background-color: #333333;
+	width: 100%;
+	height: 26px;
+}
+#headstatBground .headstat {
+	background-color: #333333;
+	max-width:1800px;
+	min-width: 650px;
+	margin: 0px auto 0px auto;
+}
+#headstatBground .headstat p {
+	background-color: #333333;
+	color: #FFFFFF;
+	font-size: 12px;
+	line-height: 26px;
+}
+
+/*> header-main
+-*------------------------------*/
+#headmainBground {
+	background-color: #2E8B57;
+	width: 100%;
+	height: 40px;
+}
+#headmainBground .headmain {
+	background-color: #2E8B57;
+	color: #FFFFFF;
+	max-width:1800px;
+	min-width: 650px;
+	margin: 0px auto 0px auto;
+}
+#headmainBground .headmain h1 {
+	background-color: #2E8B57;
+	color: #FFFFFF;
+	font-size: 16px;
+	line-height: 40px;
+}
+#headmainBground .headmain a {
+	background-color: #2E8B57;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+/*> header-navigation
+-*------------------------------*/
+#headnaviBground {
+	background-color: #8FBC8F;
+	width: 100%;
+	height: 25px;
+}
+#headnaviBground .headnavi {
+	background-color: #8FBC8F;
+	color: #FFFFFF;
+	max-width:1800px;
+	min-width: 650px;
+	margin: 0px auto 0px auto;
+}
+#headnaviBground .headnavi p{
+	background-color: #8FBC8F;
+	color: #FFFFFF;
+	font-size: 12px;
+	line-height: 25px;
+}
+/*-#------------------#-*/
+#headmenuBground {
+	background-color: #B1E1B1;
+	width: 100%;
+	height: 35px;
+}
+#headmenuBground .headmenu {
+	background-color: #B1E1B1;
+	color: #FFFFFF;
+	max-width:1800px;
+	min-width: 650px;
+	margin: 0px auto 0px auto;
+}
+#headmenuBground .headmenu p{
+	background-color: #B1E1B1;
+	color: #444444;
+	font-size: 12px;
+	line-height: 35px;
+	font-weight: bold;
+}
+/*-#------------------#-*/
+/*-# header-navi-menu #-*/
+/*-#------------------#-*/
+#headnaviBground .headnavi p:after {
+	display: block;
+	clear: both;
+	content: "";
+}
+ul.navimenu {
+	position: relative;
+	float: left;
+	list-style: none;
+}
+ul.navimenu li {
+	float: left;
+	line-height: 25px;
+	margin-right:  2px;
+}
+ul.navimenu li.nv_str {
+	color: #444444;
+}
+ul.navimenu li.nv_tab {
+	background-color: #2F4F4F;
+}
+ul.navimenu li.nv_pan {
+	background-color: #2F4F4F;
+}
+ul.navimenu li.active {
+	background-color: #778899;
+}
+ul.navimenu li a {
+	padding-left: 15px;
+	padding-right:15px;
+	text-decoration: none;
+	color: #FFFFFF;
+	display: block;
+}
+ul.navimenu li a:hover {
+	background-color: #778899;
+}
+ul.navimenu li a.an_tab:hover {
+	cursor: default;
+	text-decoration: none;
+}
+ul.navimenu li a.an_anc:hover {
+	cursor: •pointer;
+	text-decoration: underline;
+}
+ul.navimenu li dd.nv_hid {
+	position: absolute;
+	float: left;
+	left: 0px;
+	padding-top:    5px;
+	padding-bottom: 5px;
+	width: 530px;
+	background-color: #c0c0c0;
+}
+
+/*----------------------------------------------------*-
+-*==> [public]: Fixed_Cont … height: auto
+-*----------------------------------------------------*/
+#contmainBground {
+	background-color: transparent;
+	width: 100%;
+	height: auto;
+}
+#contmainBground .contmain {
+	background-color: transparent;
+	color: #000000;
+	max-width:1800px;
+	min-width: 650px;
+	margin: 0px auto 0px auto;
+}
+
+/*----------------------------------------------------*-
+-*==> [public]: Fixed_Foot … height: 26px
+-*----------------------------------------------------*/
+
+/*> footer-main
+-*------------------------------*/
+#footmainBground {
+	background-color: #333333;
+	width: 100%;
+	height: 26px;
+}
+#footmainBground .footmain {
+	background-color: #333333;
+	color: #FFFFFF;
+	max-width:1800px;
+	min-width: 650px;
+	margin: 0px auto 0px auto;
+}
+#footmainBground .footmain p {
+	background-color: #333333;
+	color: #FFFFFF;
+	font-size: 12px;
+	line-height: 26px;
+}
+#footmainBground .footmain a {
+	color: #FFFFFF;
+	text-decoration: none;
+	font-size: 12px;
+}
+#footmainBground .footmain p#footmainSpec {
+	font-size: 9px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
