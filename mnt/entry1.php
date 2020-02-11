@@ -8,43 +8,11 @@
 
     //外部スクリプト読み込み
     require_once "env.php";
-
+    require_once "../const.php";
     //	echo __FILE__ . '<br />';
     //	echo dirname(__FILE__) . '<br />';
     $err_cnt = 0;
     $err_msg = "";
-
-    /*
-        Check admin or not
-    */
-    //    session_start();
-    //
-    //    $timeout = 600; // Number of seconds until it times out.
-    //
-    //    // Check if the timeout field exists.
-    //    if (isset($_SESSION['timeout'])) {
-    //        // See if the number of seconds since the last
-    //        // visit is larger than the timeout period.
-    //        $duration = time() - (int)$_SESSION['timeout'];
-    //        if ($duration > $timeout) {
-    //            // Destroy the session and restart it.
-    //            session_destroy();
-    //            session_start();
-    //        }
-    //    }
-    //
-    //    // Update the timout field with the current time.
-    //    $_SESSION['timeout'] = time();
-    //
-    //    if (isset($_SESSION['DF_SSN_ADMIN'])) {
-    //        $str_adm = RTrim($_SESSION['DF_SSN_ADMIN']);
-    //    } else {
-    //        $str_adm = "";
-    //    }
-    //    if ($str_adm != "1") {
-    //        header('Location: ' . '/bun65');
-    //    }
-
     // chọn loại
     // 区分
     if (isset($_POST['kubun'])) {
@@ -93,7 +61,7 @@
         $db_selected = mysqli_select_db($link, $envDbName);
         if (!$db_selected) {
             //	die('データベース選択失敗です。'.mysqli_error());
-            $err_msg = 'データベース選択失敗です。' . mysqli_error();
+            $err_msg = 'データベース選択失敗です。' . mysqli_error($link);
             $err_cnt = $err_cnt + 1;
         }
 
@@ -101,7 +69,7 @@
 
         // MySQLに対する処理
 
-        mysqli_set_charset('utf8');
+        mysqli_set_charset($link, 'utf8');
 
         $sql = "select * from t_entryinfo where E_ROWID='$ROWID' ORDER BY E_ROWID desc; ";
 
@@ -109,14 +77,11 @@
 
         if (!$result) {
             //	die('SELECTクエリーが失敗しました。'.mysqli_error());
-            $err_msg = 'SELECTクエリーが失敗しました。' . mysqli_error();
+            $err_msg = 'SELECTクエリーが失敗しました。' . mysqli_error($link);
             $err_cnt = $err_cnt + 1;
         }
 
         while ($row = mysqli_fetch_assoc($result)) {
-
-            // 作品文字
-            $sakuhin = $row['E_TANKA_INFO'];
             // 作品コメント
             $comment = $row['E_COMMENT'];
             // 部門
@@ -133,14 +98,6 @@
             $S_YOKO = $row['E_SIZE_B'];
             // 作品サイズ幅
             $S_HABA = $row['E_SIZE_W'];
-            // 返送先　郵便番号
-            $R_ZIPCODE = $row['E_R_ZIPCODE'];
-            // 返送先　住所
-            $R_ADDR = $row['E_R_Addr'];
-            // 返送先　電話番号
-            $R_TEL = $row['E_R_TEL'];
-            // 返送先　宛先
-            $R_NAME = $row['E_R_NAME'];
 
             // ファイル名
             $file_nm = $row['E_FILE_NAME'];
@@ -182,18 +139,11 @@
             $INS_DATE = "";
         }
 
-        // 作品文字
-        if (isset($_POST['TANKA_INFO'])) {
-            $sakuhin = $_POST['TANKA_INFO'];
-        } else {
-            $sakuhin = "";
-        }
-
         // 作品コメント
         if (isset($_POST['COMMENT'])) {
-            $comment = $_POST['COMMENT'];
+            $COMMENT = $_POST['COMMENT'];
         } else {
-            $comment = "";
+            $COMMENT = "";
         }
 
         // 部門
@@ -275,37 +225,6 @@
             $WEIGHT = $_POST['WEIGHT'];
         } else {
             $WEIGHT = "0";
-        }
-
-        // 返送先　郵便番号
-        if (isset($_POST['R_ZIPCODE'])) {
-            $R_ZIPCODE = $_POST['R_ZIPCODE'];
-        } else {
-            $R_ZIPCODE = "";
-        }
-        //	echo $R_ZIPCODE."<br />";
-
-        // 返送先　住所
-        if (isset($_POST['R_Addr'])) {
-            $R_ADDR = $_POST['R_Addr'];
-        } else {
-            $R_ADDR = "";
-        }
-        //echo $R_ADDR . "<br />";
-
-        // 返送先　電話番号
-        if (isset($_POST['R_TEL'])) {
-            $R_TEL = $_POST['R_TEL'];
-        } else {
-            $R_TEL = "";
-        }
-        //echo $R_TEL . "<br />";
-
-        // 返送先　宛先
-        if (isset($_POST['R_NAME'])) {
-            $R_NAME = $_POST['R_NAME'];
-        } else {
-            $R_NAME = "";
         }
 
         // 返送先　宛先
@@ -436,47 +355,11 @@
                     <tr>
                         <th>組合：</th>
                         <td>
-                            <select name="DIV_NAME" id="DIV_NAME">
+                            <select name="DIV_NAME" id="DIV_NAME" value="<?= $DIV_NAME ?>">
                                 <option value="">組合名を選択ください。</option>
-                                <option value="富士通">富士通</option>
-                                <option value="富士通フロンテック">富士通フロンテック</option>
-                                <option value="新光電気">新光電気</option>
-                                <option value="富士通テレコムネットワークス">富士通テレコムネットワークス</option>
-                                <option value="富士通マーケティング">富士通マーケティング</option>
-                                <option value="しなの富士通">しなの富士通</option>
-                                <option value="ＦＤＫ">ＦＤＫ</option>
-                                <option value="富士通アイ・ネット">富士通アイ・ネット</option>
-                                <option value="扶桑電通">扶桑電通</option>
-                                <option value="ＰＦＵ">ＰＦＵ</option>
-                                <option value="富士通ワイエフシー">富士通ワイエフシー</option>
-                                <option value="富士通エレクトロニクス">富士通エレクトロニクス</option>
-                                <option value="デンソーテン">デンソーテン</option>
-                                <option value="富士通ゼネラル">富士通ゼネラル</option>
-                                <option value="富士通アイソテック">富士通アイソテック</option>
-                                <option value="ニフティ">ニフティ</option>
-                                <option value="ＪＥＭＳ＆ＦＰＥ">ＪＥＭＳ＆ＦＰＥ</option>
-                                <option value="富士通エフサス">富士通エフサス</option>
-                                <option value="富士通インフォテック">富士通インフォテック</option>
-                                <option value="富士通エフ・アイ・ピー">富士通エフ・アイ・ピー</option>
-                                <option value="富士通コワーコ">富士通コワーコ</option>
-                                <option value="富士通ネットワークソリューションズ">富士通ネットワークソリューションズ</option>
-                                <option value="富士通北陸システムズ">富士通北陸システムズ</option>
-                                <option value="富士通九州システムズ">富士通九州システムズ</option>
-                                <option value="富士通ビー・エス・シー">富士通ビー・エス・シー</option>
-                                <option value="沖縄富士通システムエンジニアリング">沖縄富士通システムエンジニアリング</option>
-                                <option value="富士通ラーニングメディア">富士通ラーニングメディア</option>
-                                <option value="富士通ＩＴプロダクツ">富士通ＩＴプロダクツ</option>
-                                <option value="富士通アドバンストエンジニアリング">富士通アドバンストエンジニアリング</option>
-                                <option value="ＦＪＦＳ">ＦＪＦＳ</option>
-                                <option value="富士通パブリックソリューションズ">富士通パブリックソリューションズ</option>
-                                <option value="富士通エフ・アイ・ピー・システムズ">富士通エフ・アイ・ピー・システムズ</option>
-                                <option value="ＦＳＣＳ">ＦＳＣＳ</option>
-                                <option value="サイプレス・イノベイツ">サイプレス・イノベイツ</option>
-                                <option value="会津富士通セミコンダクター">会津富士通セミコンダクター</option>
-                                <option value="三重富士通セミコンダクター">三重富士通セミコンダクター</option>
-                                <option value="ソシオネクスト">ソシオネクスト</option>
-                                <option value="富士通クラウドテクノロジーズ">富士通クラウドテクノロジーズ</option>
-                                <option value="オン・セミコンダクター会津">オン・セミコンダクター会津</option>
+                                <?php foreach (E_DIV_NAME as $code => $value) {
+                                    echo '<option value="' . $code . '">' . $value . '</option>';
+                                } ?>
                             </select>
                         </td>
                     </tr>
@@ -484,21 +367,21 @@
                     <tr>
                         <th>(A) 申込者（作者）氏名:</th>
                         <td>
-                            <input type="text" name="USR_NAME">
+                            <input type="text" name="USR_NAME" value="<?= $USR_NAME ?>">
                         </td>
                     </tr>
 
                     <tr>
                         <th>申込者（作者）氏名（ふりがな）:</th>
                         <td>
-                            <input type="text" name="USR_NAME_F">
+                            <input type="text" name="USR_NAME_F" value="<?= $USR_NAME_F ?>">
                         </td>
                     </tr>
 
                     <tr>
                         <th>組合員氏名:</th>
                         <td>
-                            <input type="text" name="USR_MEMBER_NAME">
+                            <input type="text" name="USR_MEMBER_NAME" value="<?= $USR_MEMBER_NAME ?>">
                         </td>
                     </tr>
 
@@ -507,9 +390,9 @@
                         <td>
                             <select name="PAR_KBN">
                                 <option value="">申込者（作者）の参加区分を選択ください。</option>
-                                <option value="1">組合員（定年後再雇用者含む）</option>
-                                <option value="2">家族</option>
-                                <option value="3">組合のOB・OG</option>
+                                <?php foreach (E_PAR_KBN as $code => $value) {
+                                    echo '<option value="' . $code . '">' . $value . '</option>';
+                                } ?>
                             </select>
                         </td>
                     </tr>
@@ -519,10 +402,9 @@
                         <td>
                             <select name="AGE_KBN">
                                 <option value="">申込者（作者）の年齢区分を選択ください。</option>
-                                <option value="1">小学生以下</option>
-                                <option value="2">中学生～18歳以下</option>
-                                <option value="3">19～59歳以下</option>
-                                <option value="4">60歳以上</option>
+                                <?php foreach (E_AGE_KBN as $code => $value) {
+                                    echo '<option value="' . $code . '">' . $value . '</option>';
+                                } ?>
                             </select>
                         </td>
                     </tr>
@@ -530,11 +412,11 @@
                     <tr>
                         <th>(B) 部門：</th>
                         <td>
-                            <select id="bumon" onchange="bumonChange()" name="BM_CODE">
+                            <select id="BM_CODE" onchange="bumonChange()" name="BM_CODE">
                                 <option value="">応募部門を選択ください。</option>
-                                <option value="EE01">エキスパート</option>
-                                <option value="EE02">キッズ</option>
-                                <option value="EE03">エンジョイ</option>
+                                <?php foreach (E_BM_CODE as $code => $value) {
+                                    echo '<option value="' . $code . '">' . $value . '</option>';
+                                } ?>
                             </select>
                         </td>
                     </tr>
@@ -542,14 +424,10 @@
                     <tr>
                         <th>(C) カテゴリー：</th>
                         <td>
-                            <select id="category" name="KBN_CODE">
-                                <option value="FF01">絵画</option>
-                                <option value="FF02">書道</option>
-                                <option value="FF03">写真</option>
-                                <option value="FF04">手芸・工芸</option>
-                                <option value="FF05">音楽</option>
-                                <option value="FF06">動画</option>
-                                <option value="FF07">絵</option>
+                            <select id="KBN_CODE" name="KBN_CODE">
+                                <?php foreach (E_KBN_CODE as $code => $value) {
+                                    echo '<option value="' . $code . '">' . $value . '</option>';
+                                } ?>
                             </select>
                         </td>
                     </tr>
@@ -571,24 +449,20 @@
                                 </legend>
                                 <input name="FILE_PATH" type="file" size=55 />
                             <?php } ?>
-                            <br />
-                            <hr />
-                            <legend>川柳・俳句・短歌作品</legend>
-                            <textarea name="TANKA_INFO" cols="50" rows="5"><?= $sakuhin ?></textarea><br>
                         </td>
                     </tr>
 
                     <tr>
                         <th>作品タイトル：</th>
                         <td>
-                            <input type="text" name="TITLE">
+                            <input type="text" name="TITLE" value="<?= $TITLE ?>">
                         </td>
                     </tr>
 
                     <tr>
                         <th>作品コメント(100文字まで)：</th>
                         <td>
-                            <textarea rows="5" name="COMMENT"></textarea><br>
+                            <textarea rows="5" name="COMMENT"><?= $COMMENT ?></textarea><br>
                         </td>
                     </tr>
 
@@ -601,64 +475,28 @@
                     <tr>
                         <th>縦（㎝）:</th>
                         <td>
-                            <input type="text" name="SIZE_L">
+                            <input type="text" name="SIZE_L" value="<?= $SIZE_L ?>">
                         </td>
                     </tr>
 
                     <tr>
                         <th>横（㎝）:</th>
                         <td>
-                            <input type="text" name="SIZE_B">
+                            <input type="text" name="SIZE_B" value="<?= $SIZE_B ?>">
                         </td>
                     </tr>
 
                     <tr>
                         <th>高さ（㎝）<br>※（C）が手芸・工芸の場合のみ入力:</th>
                         <td>
-                            <input type="text" name="SIZE_W">
+                            <input type="text" name="SIZE_W" value="<?= $SIZE_W ?>">
                         </td>
                     </tr>
 
                     <tr>
                         <th>重量（㎏）<br>※（C）が手芸・工芸の場合のみ入力:</th>
                         <td>
-                            <input type="text" name="WEIGHT">
-                        </td>
-                    </tr>
-
-
-
-                    <tr>
-                        <th colspan="2">作品の返送先、作品は展示期間の終了後に返送します。
-                            <br>（B)がエキスパート部門、キッズ部門の場合のみ入力ください。
-                        </th>
-                    </tr>
-
-                    <tr>
-                        <th>郵便番号:</th>
-                        <td>
-                            <input type="text" name="R_ZIPCODE">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>住所:</th>
-                        <td>
-                            <input type="text" name="R_Addr">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>氏名:</th>
-                        <td>
-                            <input type="text" name="R_NAME">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>電話番号:</th>
-                        <td>
-                            <input type="text" name="R_TEL">
+                            <input type="text" name="WEIGHT" value="<?= $WEIGHT ?>">
                         </td>
                     </tr>
 
@@ -718,21 +556,21 @@
 
             const category = {
                 'EE01': ['FF01', 'FF02', 'FF03', 'FF04'],
-                'EE03': ['FF03', 'FF01', 'FF05', 'FF06'],
-                'EE02': ['FF07', 'FF02'],
+                'EE02': ['FF05', 'FF06', 'FF07', 'FF08'],
+                'EE03': ['FF09', 'FF10'],
             };
 
             function bumonChange() {
                 let bumons = ['EE01', 'EE02', 'EE03'];
-                let bumon = $('#bumon').val();
-                $('#category option').hide();
+                let bumon = $('#BM_CODE').val();
+                $('#KBN_CODE option').hide();
                 if (bumons.indexOf(bumon) != -1) {
                     category[bumon].forEach(function(cat) {
-                        $("#category option[value='" + cat + "']").show();
+                        $("#KBN_CODE option[value='" + cat + "']").show();
                     })
-                    $('#category').val(category[bumon][0]);
+                    $('#KBN_CODE').val(category[bumon][0]);
                 } else {
-                    $('#category').val("");
+                    $('#KBN_CODE').val("");
                 }
 
             }
