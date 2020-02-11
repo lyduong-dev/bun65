@@ -416,16 +416,8 @@
                     mkdir($envSakuhinFol);
                 }
 
-                if (!file_exists($envSakuhinFol . "thumbnails/")) {
-                    mkdir($envSakuhinFol . "thumbnails/");
-                }
-
-                $sv_file_nm = "img" . $r_no . $F_TYPE;
+                $sv_file_nm = "img" . $r_no .'.'. $F_TYPE;
                 $sv_file_path = $envSakuhinFol . $sv_file_nm;
-                echo $sv_file_nm . "<br />";
-                echo $sv_file_path . "<br />";
-                $thum_file_nm = $envSakuhinFol . "thumbnails/" . "min-img" . $r_no . $F_TYPE;
-                echo $thum_file_nm . "<br />";
                 if (copy($F_PATH . $F_NAME, $sv_file_path)) {
                     chmod($sv_file_path, 0644);
                     echo "[" . $F_PATH . $F_NAME . "]をアップロードしました。";
@@ -442,40 +434,7 @@
             // header('Content-type: image/jpeg');
 
 
-            // イメージサイズ取得
-            list($width, $height) = getimagesize($sv_file_path);
-
-            // サムネイル画像のサイズを指定
-            list($new_width, $new_height) = getImageSizeForSmartResize(250, 250, $width, $height);
-
-            // 新しい画像を生成
-            if ($type === ".jpg" || $type === ".jpeg")
-                $src = imagecreatefromjpeg($sv_file_path);
-            elseif ($type === ".gif")
-                $src = imagecreatefromgif($sv_file_path);
-            else
-                $src = imagecreatefrompng($sv_file_path);
-
-            // 画像領域の作成
-            $image = imagecreatetruecolor($new_width, $new_height);
-            // exifデータ生成
-            $exif = exif_read_data($sv_file_path);
-
-            // サムネイル画像の生成
-            imagecopyresampled($image, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-
-            if ($type === ".jpg" || $type === ".jpeg")
-                imagejpeg($image, $thum_file_nm);
-            elseif ($type === ".gif")
-                imagegif($image, $thum_file_nm);
-            else
-                imagepng($image, $thum_file_nm);
-
-            chmod($thum_file_nm, 0644);
-
-            imagedestroy($image);
-            imagedestroy($src);
-
+           
             $F_PATH = dirname(__FILE__) . $envSakuhinFol;
             $F_PATH = "";
             $F_NAME = $r_no . "." . $F_TYPE;

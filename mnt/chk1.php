@@ -321,43 +321,64 @@ elseif ($KBN_CODE == "FF07") {
 else {
 
     if (isset($file['error']) && is_int($file['error'])) {
-
         try {
 
             // $file['error'] の値を確認
             switch ($file['error']) {
                 case UPLOAD_ERR_OK: // OK
+                    $log_file = createLog('Upload ERROR [' . $file['error'] . ']', 'ERROR');
                     break;
                 case UPLOAD_ERR_NO_FILE:   // ファイル未選択
+                    $log_file = createLog('No File Input [' . $file['error'] . ']', 'ERROR');
+
                     //					throw new RuntimeException('ファイルが選択されていません');
                     $f_flg = 1;
                     break;
                 case UPLOAD_ERR_INI_SIZE:  // php.ini定義の最大サイズ超過
+                    $log_file = createLog('File Size Error [' . $file['size'] . ']', 'ERROR');
                 case UPLOAD_ERR_FORM_SIZE: // フォーム定義の最大サイズ超過
+                    $log_file = createLog('File Size Too Big [' . $file['size'] . ']', 'ERROR');
                     throw new RuntimeException('ファイルサイズが大きすぎます');
+
                 default:
+                    $log_file = createLog('Reason undefined [' . $file['error'] . ']', 'ERROR');
                     throw new RuntimeException('その他のエラーが発生しました');
             }
 
+            $name = $file['name'];
+
+            // echo "name: " . $name . "<br />";
+            // $target_dir = "/var/www/html/public/mnt/uploads/";
+            $target_dir = "../mnt/uploads/";
+            $target_file = $target_dir . $file["name"];
             // $file['mime']の値はブラウザ側で偽装可能なので、MIMEタイプを自前でチェックする
-            $type = @exif_imagetype($file['tmp_name']);
-            // echo $type;
-            //			if (!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true)) {
-            if (!in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG), true)) {
+            $type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            // echo "type " . $type;
+
+            // Valid file extensions
+            $extensions_arr = array("jpg", "jpeg", "png",'gif');
+
+            //if (!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true)) {
+            if (!in_array($type, $extensions_arr, true)) {
+                $log_file = createLog('Wrong File Type (' . $type . ')', 'ERROR');
                 throw new RuntimeException('画像形式が未対応です');
             }
 
             // ファイルデータからSHA-1ハッシュを取ってファイル名を決定し、ファイルを保存する
-            $f_nm = sprintf('%s%s', sha1_file($file['tmp_name']), image_type_to_extension($type));
-
-            $path = sprintf('../mnt/uploads/Image/%s%s', sha1_file($file['tmp_name']), image_type_to_extension($type));
-
-
-            $f_type = image_type_to_extension($type);
+            $f_nm = $name;
+            $path = $target_file;
+            // echo $path . " ";
+            // echo $f_nm;
+            $f_type = $type;
             if (!move_uploaded_file($file['tmp_name'], $path)) {
+                $log_file = createLog('Error saving file: ' . $path, 'ERROR');
                 throw new RuntimeException('ファイル保存時にエラーが発生しました');
+            } else {
+                $log_file = createLog('Upload Successful [' . $path . '] [' . $f_nm . '] [' . $type . ']', 'DEBUG');
             }
             chmod($path, 0666);
+            //generateThumnail($path,"/var/www/html/public/mnt/uploads/Videos/Thumbnails"$name);
+
         } catch (RuntimeException $e) {
             //			$msg_file = ['red', $e->getMessage()];
             $f_flg = 1;
